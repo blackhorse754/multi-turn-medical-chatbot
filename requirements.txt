@@ -1,0 +1,12 @@
+python-dotenv
+openai
+langchain
+langchain-community
+langchain-openai
+langchain-core
+faiss-cpu
+pypdf
+pandas
+numpy
+matplotlib
+seaborn
