@@ -23,48 +23,35 @@ This conversational assistant system combines advanced NLP techniques with healt
 
 ## 🚀 Setup Instructions
 
-Follow these steps to set up and run the system:
-
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
-cd <project-directory>
+git clone https://github.com/blackhorse754/multi-turn-medical-chatbot.git
+cd multi-turn-medical-chatbot
 ```
 
-### 2. Activate the Environment
+### 2. Add your OpenAI API key
 
 ```bash
-conda activate <your-environment-name>
+cp .env.example .env
+# then edit .env and paste in your OPENAI_API_KEY
 ```
 
-### 3. Install Dependencies
+### 3. Add source documents
 
-Ensure all required packages are installed (see requirements.txt or environment.yml)
+Drop a few reference PDFs (e.g. public health guidelines) into `input/docs/`.
+The FAISS index is built automatically from these on first run.
 
-### 4. Prepare Input Files
-
-Unzip any required data files:
+### 4. Build and run
 
 ```bash
-unzip input_docs.zip
-unzip interim.zip
+docker compose build
+docker compose run --rm chatbot
 ```
 
-### 5. Configure Database Path
-
-Set your database path in your configuration:
-
-```python
-DB_PATH = Path("<your-database-path>/session_history.db")
-```
-
-### 6. Run the Application
-
-```bash
-python scripts/conversational_bot.py
-```
-
+This is a multi-turn CLI chat session — type your question at the prompt,
+and type `close` to end the session. The SQLite session database and FAISS
+index persist across runs via Docker volumes.
 ---
 
 ## 🗃️ Analytics & Insights

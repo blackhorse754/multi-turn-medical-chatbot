@@ -36,9 +36,10 @@ AUTO_LOGOUT_SECONDS = 3 * 60  # 15 minutes
 MEMORY_DIR = Path(__file__).parent / "sessionMemory"
 MEMORY_DIR.mkdir(parents=True, exist_ok=True)
 MEMORY_PATH = MEMORY_DIR / "session_memory"
-DB_PATH = Path("/shared/DataScienceLinux/Projects/session_history.db")
-FALLBACK_DIR = Path("/shared/DataScienceLinux/Projects/log/fallback.db")
-
+DDB_PATH = Path(os.getenv("DB_PATH", str(ROOT_FOLDER / "data" / "session_history.db")))
+FALLBACK_DIR = Path(os.getenv("FALLBACK_DIR", str(ROOT_FOLDER / "data" / "log" / "fallback.db")))
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+FALLBACK_DIR.parent.mkdir(parents=True, exist_ok=True)
 IST_zone = ZoneInfo("Asia/Kolkata")
 
 def ist_timestamp(ts: Optional[float] = None) -> str:
@@ -56,8 +57,8 @@ def ist_timestamp(ts: Optional[float] = None) -> str:
     return dt.strftime("%Y-%m-%d %H:%M:%S,%f")[:-3]+ " IST" 
 
 #run based
-CREATE_FAISS_INDEX = 0 #0 # 0 or 1
-CREATE_SQLITE_DB = 1 # 0 or 1
+_faiss_index_path = INTERIM_FOLDER / "faiss_index"
+CREATE_FAISS_INDEX = int(os.getenv("CREATE_FAISS_INDEX", "0" if _faiss_index_path.exists() else "1"))CREATE_SQLITE_DB = 1 # 0 or 1
 
 #from scripts.utils import set_llm
 #RAG based

@@ -1,0 +1,15 @@
+services:
+  chatbot:
+    build: .
+    stdin_open: true   # required so `docker compose run` accepts input()
+    tty: true
+    env_file:
+      - .env
+    volumes:
+      - ./input/docs:/app/input/docs     # drop your source PDFs here
+      - chatbot_data:/app/data           # persists the SQLite session DB
+      - chatbot_index:/app/interim       # persists the built FAISS index
+
+volumes:
+  chatbot_data:
+  chatbot_index:
